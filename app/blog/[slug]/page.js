@@ -82,7 +82,7 @@ export default async function ArticlePage({ params }) {
         <div className="qn">{a.cat}</div>
         <h1 style={{ fontSize: '1.5rem', textAlign: 'left', color: 'var(--txt)', letterSpacing: '.02em', lineHeight: 1.5 }}>{a.title}</h1>
         <p className="small">公開 {a.date} ／ {a.author}</p>
-        {a.thumb && <img className="cardimg" src={a.thumb} alt={a.title} />}
+        <img className="cardimg" src={thumbFor(a)} alt={a.title} />
         <div className="article-body" dangerouslySetInnerHTML={{ __html: rewriteLinks(a.body) }} />
         <Link className="cta" href="/hikaku">🔮 あなたの悩みをプロの占い師に相談する（電話占い比較）</Link>
         <div className="row" style={{ marginTop: 10 }}>
