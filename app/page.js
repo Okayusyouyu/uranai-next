@@ -8,6 +8,24 @@ import ColumnRanking from './components/ColumnRanking';
 
 export const revalidate = 3600;
 
+const SITE =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
+  'https://uranai-next.vercel.app';
+
+export const metadata = {
+  alternates: { canonical: '/' },
+  openGraph: { title: '運命の八門 ― 奇門遁甲のあなた診断', images: ['/api/og?title=' + encodeURIComponent('運命の八門') + '&cat=' + encodeURIComponent('診断')] },
+  twitter: { card: 'summary_large_image' },
+};
+
+const siteLd = {
+  '@context': 'https://schema.org', '@type': 'WebSite',
+  name: '運命の八門', url: SITE,
+  description: '奇門遁甲の八門で、あなたの正体・2026年の運勢・開運方位を無料診断。',
+  publisher: { '@type': 'Organization', name: '運命の八門 編集部', url: SITE },
+};
+
 const MENU = [
   ['/shindan', '🔮', '八門診断', 'あなたの正体と2026の運勢・金運'],
   ['/today', '🧭', '今日の方角', '毎日の開運・金運方位をチェック'],
@@ -91,7 +109,7 @@ export default async function Home() {
           {ORDER.map(k => {
             const g = GATES[k];
             return (
-              <Link key={k} className="type-mini" href={`/zukan#gate-${k}`}>
+              <Link key={k} className="type-mini" href={`/zukan/${k}`}>
                 <b>{g.name}</b>（{g.arche}）<span>{g.catch}</span>
               </Link>
             );
@@ -102,6 +120,8 @@ export default async function Home() {
       </div>
 
       <p className="foot">運命の八門 ― 2026<br />※本サイトは占い・エンタテインメントを目的としたものです。<Link href="/about">運営者情報・免責・プライバシー</Link></p>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteLd) }} />
     </div>
   );
 }

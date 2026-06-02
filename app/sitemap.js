@@ -1,4 +1,5 @@
 import { getArticles } from '../lib/supabase';
+import { ORDER } from '../lib/hachimon';
 
 export const revalidate = 3600;
 
@@ -20,6 +21,11 @@ export default async function sitemap() {
     { path: '/about', priority: 0.3, changeFrequency: 'yearly' },
   ].map(p => ({ url: SITE + p.path, lastModified: now, changeFrequency: p.changeFrequency, priority: p.priority }));
 
+  // 八門 個別ページ（/zukan/kai 等）
+  const gatePages = ORDER.map(k => ({
+    url: `${SITE}/zukan/${k}`, lastModified: now, changeFrequency: 'monthly', priority: 0.6,
+  }));
+
   let articlePages = [];
   try {
     const arts = await getArticles();
@@ -31,5 +37,5 @@ export default async function sitemap() {
     }));
   } catch (e) { /* 記事取得失敗時は静的ページのみ */ }
 
-  return [...staticPages, ...articlePages];
+  return [...staticPages, ...gatePages, ...articlePages];
 }

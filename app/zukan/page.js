@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import { ORDER, GATES, affinityGates } from '../../lib/hachimon';
+import { ORDER, GATES } from '../../lib/hachimon';
 
 export const metadata = {
-  title: '八門図鑑 ― 8つの門の性格・運勢・相性',
-  description: '開門・生門・休門・景門・杜門・傷門・驚門・死門――奇門遁甲の八門それぞれの性格、2026年の総合運/金運/恋愛運/仕事運、相性の門を完全網羅。あなたの門は診断で。',
+  title: '八門図鑑 ― 8つの門の性格・運勢・相性一覧',
+  description: '開門・生門・休門・景門・杜門・傷門・驚門・死門――奇門遁甲の八門それぞれの性格・2026年の運勢・金運・相性を一覧で。気になる門をタップして詳しく。あなたの門は無料診断で。',
   alternates: { canonical: '/zukan' },
   openGraph: { title: '八門図鑑 ― 8つの門のすべて', images: ['/api/og?title=' + encodeURIComponent('八門図鑑') + '&cat=' + encodeURIComponent('図鑑')] },
+  twitter: { card: 'summary_large_image' },
 };
 
-// 全8門を常時表示（SEO最大化）。グリッドはアンカーでジャンプ＝JS不要
 export default function Page() {
   return (
     <div className="wrap">
@@ -16,41 +16,35 @@ export default function Page() {
       <div className="sub">8つの門それぞれの性格と運命</div>
 
       <div className="card">
-        <div className="zukan-grid">
-          {ORDER.map(k => {
+        <p className="small">奇門遁甲の<b>八門</b>は、人が生まれ持つ8つの“魂のタイプ”。それぞれに性格・強み・2026年の運勢・金運・相性があります。気になる門をタップすると、詳しい解説ページが開きます。</p>
+        <div className="zukan-grid" style={{ marginTop: 12 }}>
+          {ORDER.map((k) => {
             const g = GATES[k];
             return (
-              <a className="gate-cell" href={`#gate-${k}`} key={k}>
+              <Link className="gate-cell" href={`/zukan/${k}`} key={k}>
                 <div className="gn">{g.name}</div>
                 <div className="ga">{g.arche}</div>
                 <div className="ge">{g.elem}・{g.yomi}</div>
-              </a>
+              </Link>
             );
           })}
         </div>
       </div>
 
-      {ORDER.map(k => {
-        const g = GATES[k];
-        const aff = affinityGates(k);
-        return (
-          <div className="card" id={`gate-${k}`} key={k} style={{ scrollMarginTop: 80 }}>
-            <div className="gate-head">
-              <div className="gate-name">{g.name}</div>
-              <div className="gate-arche">{g.arche}</div>
-              <div className="gate-catch">― {g.catch} ―</div>
-            </div>
-            <p>{g.honshitsu}</p>
-            <p className="small">影：{g.kage}　／　使命：{g.shimei}</p>
-            <div className="sec"><h3>⭐ 2026 総合運 <span className="star">{g.sougo[0]}</span></h3><p>{g.sougo[1]}</p></div>
-            <div className="sec money"><h3>💰 金運</h3><p>{g.kinun}</p></div>
-            <div className="sec"><h3>💕 恋愛運 <span className="star">{g.renai[0]}</span></h3><p>{g.renai[1]}</p></div>
-            <div className="sec"><h3>💼 仕事運 <span className="star">{g.shigoto[0]}</span></h3><p>{g.shigoto[1]}</p></div>
-            <div className="sec"><h3>🍀 健康・対人</h3><p>{g.kenko}</p></div>
-            <div className="sec"><h3>🤝 相性の門</h3><p>相性◎＝<b>{aff.great.join('・')}</b> ／ 試練＝<b>{aff.hard.join('・')}</b></p></div>
-          </div>
-        );
-      })}
+      {/* 各門の一言紹介（内部リンク＋概要） */}
+      <div className="card">
+        <h3 className="sect-h">8つの門のひとこと紹介</h3>
+        <ul className="small" style={{ lineHeight: 2 }}>
+          {ORDER.map((k) => {
+            const g = GATES[k];
+            return (
+              <li key={k}>
+                <Link href={`/zukan/${k}`}><b>{g.name}</b>（{g.arche}）</Link>…{g.catch}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
 
       <div className="card" style={{ textAlign: 'center' }}>
         <p className="small">あなたがどの門かは診断で分かります。</p>

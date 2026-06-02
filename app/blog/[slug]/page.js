@@ -3,6 +3,12 @@ import { getArticle, getArticles, thumbFor } from '../../../lib/supabase';
 
 export const revalidate = 3600; // ISR：n8nの新記事を1時間で反映
 
+const SITE =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
+  'https://uranai-next.vercel.app';
+const absThumb = (a) => (a.thumb ? a.thumb : `${SITE}/api/og?title=${encodeURIComponent(a.title)}&cat=${encodeURIComponent(a.cat)}`);
+
 export async function generateStaticParams() {
   const arts = await getArticles();
   return arts.map((a) => ({ slug: a.slug }));
@@ -47,13 +53,24 @@ export default async function ArticlePage({ params }) {
   if (!a) return <div className="wrap"><p className="small">記事が見つかりませんでした。</p></div>;
 
   const arts = await getArticles();
-  const rel = arts.filter((x) => x.id !== a.id).slice(0, 3);
+  // 関連＝同カテゴリ優先で3本（足りなければ他カテゴリで補完）
+  const others = arts.filter((x) => x.id !== a.id);
+  const rel = [...others.filter((x) => x.cat === a.cat), ...others.filter((x) => x.cat !== a.cat)].slice(0, 3);
   const faqLd = extractFaq(a.body);
   const articleLd = {
     '@context': 'https://schema.org', '@type': 'Article', headline: a.title,
-    description: a.desc, datePublished: a.date, dateModified: a.date,
+    description: a.desc, image: [absThumb(a)], datePublished: a.date, dateModified: a.date,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE}/blog/${a.slug}` },
     author: { '@type': 'Organization', name: a.author },
-    publisher: { '@type': 'Organization', name: '運命の八門' },
+    publisher: { '@type': 'Organization', name: '運命の八門', url: SITE },
+  };
+  const breadcrumbLd = {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: '開運コラム', item: `${SITE}/blog` },
+      { '@type': 'ListItem', position: 3, name: a.title, item: `${SITE}/blog/${a.slug}` },
+    ],
   };
 
   return (
@@ -87,6 +104,7 @@ export default async function ArticlePage({ params }) {
       <p className="foot">運命の八門 ― 2026<br />※本記事は占い・エンタテインメントを目的とした情報です。<Link href="/about">運営者情報・免責</Link></p>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
       {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
     </div>
   );

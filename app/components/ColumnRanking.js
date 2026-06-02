@@ -11,7 +11,7 @@ export default function ColumnRanking({ title, items, children }) {
         {items.map((a, i) => (
           <li key={a.id} className="rank-item">
             <div className="rank-num">{i + 1}</div>
-            <img className="rank-thumb" src={thumbFor(a)} loading="lazy" alt="" />
+            <img className="rank-thumb" src={thumbFor(a)} loading="lazy" alt={a.title} />
             <Link href={`/blog/${a.slug}`} style={{ flex: 1 }}>
               <div className="rt">{a.title}</div>
               <div className="rc">{a.cat}・{a.date}</div>
