@@ -7,7 +7,9 @@ export const COCONALA = {
   tokuten: '新規登録で3,000円分無料クーポン',
   link: 'https://px.a8.net/svt/ejp?a8mat=4B5MC4+7PG0OI+2PEO+C3BAQ',
   imp: 'https://www14.a8.net/0.gif?a8mat=4B5MC4+7PG0OI+2PEO+C3BAQ',
-  bannerImg: 'https://pub.a8.net/data/s00000012624/banner/202108031451560480.jpg',
+  // バナー画像は自前ドメインから配信（pub.a8.netはスマホの広告ブロックで遮断されるため）。
+  // クリック計測(px.a8.net)・表示計測(0.gif)はそのままなので収益計測に影響なし。
+  bannerImg: '/promo/coconala-300x250.jpg',
   bannerW: 300, bannerH: 250,
   desc: '東証グロース上場・株式会社ココナラが運営。実績豊富な占い師を自分で選び、電話・チャットで相談できます。料金は占い師ごとの明朗会計で、従来の電話占いより気軽。まず無料クーポン分から試せるのが安心です。',
 };
