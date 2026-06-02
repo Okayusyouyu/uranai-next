@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import { getArticles, thumbFor } from '../lib/supabase';
+import { getArticles } from '../lib/supabase';
 import { GATES, ORDER } from '../lib/hachimon';
 import PromoCoconala from './components/PromoCoconala';
 import TodayTeaser from './components/TodayTeaser';
 import KaiunGoods from './components/KaiunGoods';
+import ColumnRanking from './components/ColumnRanking';
 
 export const revalidate = 3600;
 
@@ -17,9 +18,20 @@ const MENU = [
 ];
 const THEMES = ['恋愛', '復縁', '金運', '相性', '人間関係', '開運方位'];
 
+const POPULAR_CATS = ['恋愛', '復縁', '金運', '相性', '人間関係'];
+
 export default async function Home() {
   const arts = await getArticles();
-  const ranking = arts.slice(0, 5);
+  const latest = arts.slice(0, 3); // 最新3件（created_at降順）
+  // 人気＝最新3件を除き、人気ジャンル優先で3件（最新と重複させない）
+  const latestSlugs = new Set(latest.map(a => a.slug));
+  const popular = arts
+    .filter(a => !latestSlugs.has(a.slug))
+    .sort((a, b) => {
+      const ra = POPULAR_CATS.indexOf(a.cat), rb = POPULAR_CATS.indexOf(b.cat);
+      return (ra === -1 ? 99 : ra) - (rb === -1 ? 99 : rb);
+    })
+    .slice(0, 3);
   return (
     <div className="wrap">
       {/* HERO */}
@@ -56,27 +68,16 @@ export default async function Home() {
         <span className="go">特集を読む →</span>
       </Link>
 
-      {/* 人気コラム ランキング */}
-      <div className="card">
-        <h3 className="sect-h">人気の開運コラム</h3>
-        {ranking.length === 0 && <p className="small">コラムを準備中です。</p>}
-        <ol className="rank-list">
-          {ranking.map((a, i) => (
-            <li key={a.id} className="rank-item">
-              <div className="rank-num">{i + 1}</div>
-              <img className="rank-thumb" src={thumbFor(a)} loading="lazy" alt="" />
-              <Link href={`/blog/${a.slug}`} style={{ flex: 1 }}>
-                <div className="rt">{a.title}</div>
-                <div className="rc">{a.cat}・{a.date}</div>
-              </Link>
-            </li>
-          ))}
-        </ol>
+      {/* 最新コラム（3件） */}
+      <ColumnRanking title="最新コラム" items={latest} />
+
+      {/* 人気の開運コラム（3件） */}
+      <ColumnRanking title="人気の開運コラム" items={popular}>
         <div className="theme-chips" style={{ margin: '14px 0 4px' }}>
           {THEMES.map(t => <Link key={t} className="theme-chip" href="/blog">#{t}</Link>)}
         </div>
         <Link className="btn ghost sm" href="/blog" style={{ marginTop: 10 }}>コラムをもっと見る</Link>
-      </div>
+      </ColumnRanking>
 
       {/* 開運グッズ（物販アフィリ） */}
       <KaiunGoods />
