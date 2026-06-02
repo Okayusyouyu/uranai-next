@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { getArticle, getArticles, thumbFor } from '../../../lib/supabase';
+import PromoCoconala from '../../components/PromoCoconala';
+import KaiunGoods from '../../components/KaiunGoods';
 
 export const revalidate = 3600; // ISR：n8nの新記事を1時間で反映
 
@@ -90,12 +92,18 @@ export default async function ArticlePage({ params }) {
         </div>
       </article>
 
+      {/* 収益導線：記事を読み終えた高関心タイミングで電話占い */}
+      <PromoCoconala />
+
       <div className="card">
         <h3 style={{ color: 'var(--gold)', letterSpacing: '.06em' }}>関連コラム</h3>
         {rel.map((r) => (
           <Link key={r.id} className="small" style={{ display: 'block', padding: '8px 0', borderTop: '1px solid var(--line)' }} href={`/blog/${r.slug}`}>{r.title}</Link>
         ))}
       </div>
+
+      {/* 開運グッズ（物販アフィリ） */}
+      <KaiunGoods />
       <div className="card" style={{ textAlign: 'center' }}>
         <p className="small">あなたの門・開運方位・金運を今すぐ占う。</p>
         <Link className="btn ghost sm" href="/shindan">▶ 八門診断</Link>

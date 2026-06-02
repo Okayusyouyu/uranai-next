@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getArticles, thumbFor } from '../../lib/supabase';
+import PromoCoconala from '../components/PromoCoconala';
 
 export const revalidate = 3600;
 export const metadata = {
@@ -25,6 +26,8 @@ export default async function BlogIndex() {
           <div className="small">{a.desc}</div>
         </Link>
       ))}
+      <PromoCoconala />
+
       <div className="card" style={{ textAlign: 'center' }}>
         <p className="small">まずは自分の門を知ろう。</p>
         <Link className="btn ghost sm" href="/shindan">▶ 八門診断をする</Link>
