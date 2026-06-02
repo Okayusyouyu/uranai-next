@@ -1,6 +1,5 @@
 // お問い合わせフォームのURL。Googleフォーム作成後にここへ貼るだけで有効化される。
-// 例: const CONTACT_FORM_URL = 'https://forms.gle/xxxxxxxx';
-const CONTACT_FORM_URL = '';
+const CONTACT_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfzhjGRYGQV45pNuCAbLa-n4Aqt6x9eLTJt-3t6_LQB-I8Ntg/viewform';
 
 export const metadata = {
   title: '運営者情報・免責・プライバシーポリシー',
