@@ -27,8 +27,8 @@ const COCONALA = {
   name: 'ココナラ（お悩み相談・占い）',
   link: 'https://px.a8.net/svt/ejp?a8mat=4B5MC4+7Q1GAA+2PEO+1BPGPE',
   imp: 'https://www17.a8.net/0.gif?a8mat=4B5MC4+7Q1GAA+2PEO+1BPGPE',
-  bannerImg: '', // 例: 'https://www25.a8.net/svt/bgt?aid=...&wid=...&eno=...&mid=...&mc=...'
-  bannerW: 350, bannerH: 160,
+  bannerImg: 'https://pub.a8.net/data/s00000012624/banner/202108031451560480.jpg',
+  bannerW: 300, bannerH: 250,
   desc: 'プロの占い師・カウンセラーに、チャット・電話・ビデオで相談できるスキルマーケット。1回ごとの明朗会計で、分課金の電話占いより気軽に試せます。恋愛・人間関係・仕事の悩みをまず軽く相談したい方に。',
 };
 
