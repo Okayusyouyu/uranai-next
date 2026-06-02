@@ -15,24 +15,48 @@ async function loadFont(text) {
   return await res.arrayBuffer();
 }
 
+// カテゴリ→背景画像（public/og/*.jpg・gen-thumbsのマッピングを踏襲）
+const BG = {
+  '恋愛': 'renai.jpg', '金運': 'kinun.jpg', '相性': 'aishou.jpg', '人間関係': 'aishou.jpg',
+  '開運方位': 'houi.jpg', '奇門遁甲': 'kimon.jpg', '今日の運勢': 'kimon.jpg', '占いニュース': 'aishou.jpg',
+  '診断': 'kimon.jpg', '方位': 'houi.jpg', '図鑑': 'kimon.jpg', '相性診断': 'aishou.jpg',
+};
+
+async function loadBg(cat, reqUrl) {
+  const file = BG[cat] || 'kimon.jpg';
+  try {
+    const buf = await (await fetch(new URL(`/og/${file}`, reqUrl))).arrayBuffer();
+    return `data:image/jpeg;base64,${Buffer.from(buf).toString('base64')}`;
+  } catch (e) { return null; }
+}
+
 export async function GET(req) {
   const { searchParams } = new URL(req.url);
   const title = (searchParams.get('title') || '運命の八門').slice(0, 60);
   const cat = (searchParams.get('cat') || '占い').slice(0, 12);
-  const text = title + cat + '運命の八門 2026 ✦ #' ;
-  let fontData;
-  try { fontData = await loadFont(text); } catch (e) { fontData = null; }
+  const text = title + cat + '運命の八門・2026 ✦ #';
+
+  let fontData = null, bgUri = null;
+  try { [fontData, bgUri] = await Promise.all([loadFont(text), loadBg(cat, req.url)]); }
+  catch (e) { try { bgUri = await loadBg(cat, req.url); } catch (_) {} }
 
   return new ImageResponse(
     (
-      <div style={{ width: '1200px', height: '630px', display: 'flex', flexDirection: 'column',
-        background: 'linear-gradient(135deg,#fffdf8,#f3ead7)', padding: '56px 72px',
-        border: '6px solid #c8a14a', borderRadius: '28px', fontFamily: 'JP', position: 'relative' }}>
-        <div style={{ color: '#b8932f', fontSize: 30, letterSpacing: 6 }}>運 命 の 八 門 ・ 2026</div>
-        <div style={{ display: 'flex', alignSelf: 'flex-start', marginTop: 26, padding: '8px 22px',
-          background: '#fff7e2', border: '2px solid #c8a14a', borderRadius: 26, color: '#b8932f', fontSize: 30, fontWeight: 700 }}>{cat}</div>
-        <div style={{ display: 'flex', color: '#33304a', fontSize: 58, fontWeight: 700, lineHeight: 1.35, marginTop: 30, maxWidth: 800 }}>{title}</div>
-        <div style={{ display: 'flex', position: 'absolute', bottom: 54, left: 72, color: '#9b8f6a', fontSize: 28 }}>#運命の八門</div>
+      <div style={{ width: '1200px', height: '630px', display: 'flex', position: 'relative', fontFamily: 'JP', background: '#171320' }}>
+        {bgUri && <img src={bgUri} width={1200} height={630} style={{ position: 'absolute', top: 0, left: 0, width: '1200px', height: '630px', objectFit: 'cover' }} />}
+        {/* 左を濃くするスクリム（文字を読みやすく） */}
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '1200px', height: '630px', background: 'linear-gradient(90deg, rgba(18,14,28,0.88) 0%, rgba(18,14,28,0.74) 48%, rgba(18,14,28,0.42) 100%)' }} />
+        {/* 下を暗くして透かし/フッターを馴染ませる */}
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '1200px', height: '630px', background: 'linear-gradient(0deg, rgba(18,14,28,0.75) 0%, rgba(18,14,28,0) 28%)' }} />
+        {/* 金枠 */}
+        <div style={{ position: 'absolute', top: '24px', left: '24px', width: '1128px', height: '578px', border: '4px solid rgba(200,161,74,0.85)', borderRadius: '24px' }} />
+        {/* 本文 */}
+        <div style={{ position: 'absolute', top: '0px', left: '0px', display: 'flex', flexDirection: 'column', padding: '72px 84px', width: '780px' }}>
+          <div style={{ color: '#e7c977', fontSize: 30, letterSpacing: 6 }}>運 命 の 八 門 ・ 2026</div>
+          <div style={{ display: 'flex', alignSelf: 'flex-start', marginTop: 24, padding: '8px 22px', background: 'rgba(231,201,119,0.16)', border: '2px solid #c8a14a', borderRadius: 26, color: '#f0dca0', fontSize: 30, fontWeight: 700 }}>{cat}</div>
+          <div style={{ color: '#fffaf0', fontSize: 58, fontWeight: 700, lineHeight: 1.34, marginTop: 28, width: '612px' }}>{title}</div>
+        </div>
+        <div style={{ position: 'absolute', bottom: '52px', left: '84px', color: '#cdbf94', fontSize: 28 }}>#運命の八門</div>
       </div>
     ),
     {
