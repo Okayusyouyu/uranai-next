@@ -22,13 +22,12 @@ export default function PromoCoconala({ heading = '📞 はじめての電話占
       <div className="badge">初回特典あり <span className="pr-tag">PR</span></div>
       <h3 style={{ color: 'var(--gold)', margin: '10px 0 0' }}>{COCONALA.name}</h3>
       <div className="offer">🎁 {COCONALA.tokuten}</div>
-      <a href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener" style={{ display: 'block', textDecoration: 'none' }}>
+      <a href="/go/coconala" target="_blank" rel="nofollow sponsored noopener" style={{ display: 'block', textDecoration: 'none' }}>
         <CoconalaBanner src={COCONALA.bannerImg} w={COCONALA.bannerW} h={COCONALA.bannerH} alt={COCONALA.name} />
       </a>
       <p className="small">{COCONALA.desc}</p>
-      <a className="gobtn" href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener" style={{ fontSize: '.95rem', padding: '11px 18px' }}>▶ 3,000円分の無料クーポンを受け取る</a>
+      <a className="gobtn" href="/go/coconala" target="_blank" rel="nofollow sponsored noopener" style={{ fontSize: '.95rem', padding: '11px 18px' }}>▶ 3,000円分の無料クーポンを受け取る</a>
       <p className="small" style={{ color: '#9b8f6a', marginTop: 6 }}>※クーポンは新規会員登録の方が対象。詳細・条件は公式ページをご確認ください。</p>
-      <img src={COCONALA.imp} width={1} height={1} alt="" style={{ position: 'absolute', width: 1, height: 1, opacity: 0 }} />
     </div>
   );
 }

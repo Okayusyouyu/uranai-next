@@ -5,7 +5,7 @@ const SITE =
 
 export default function robots() {
   return {
-    rules: { userAgent: '*', allow: '/', disallow: ['/api/'] },
+    rules: { userAgent: '*', allow: '/', disallow: ['/api/', '/go/'] },
     sitemap: `${SITE}/sitemap.xml`,
     host: SITE,
   };
