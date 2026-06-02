@@ -15,7 +15,7 @@ export default function CoconalaBanner({ src, w, h, alt }) {
     );
   }
   return (
-    <img className="bnr" src={src} width={w} height={h} alt={alt}
+    <img className="uimg" src={src} width={w} height={h} alt={alt}
       loading="lazy" onError={() => setFailed(true)} />
   );
 }
