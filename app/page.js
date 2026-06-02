@@ -1,5 +1,9 @@
 import Link from 'next/link';
 import { getArticles, thumbFor } from '../lib/supabase';
+import { GATES, ORDER } from '../lib/hachimon';
+import PromoCoconala from './components/PromoCoconala';
+import TodayTeaser from './components/TodayTeaser';
+import KaiunGoods from './components/KaiunGoods';
 
 export const revalidate = 3600;
 
@@ -11,22 +15,14 @@ const MENU = [
   ['/blog', '✍', '開運コラム', '奇門遁甲・開運方位・金運の記事'],
   ['/hikaku', '📞', '電話占い比較', '悩みをプロに相談したい人へ'],
 ];
-const GATES = [
-  ['開門（開拓者）', '始まりを切り拓く行動の人'],
-  ['生門（育成者）', '育てて増やす“財運の門”'],
-  ['休門（癒やし手）', '整え和ませる調停者'],
-  ['景門（表現者）', '魅せて照らす華と発信力'],
-  ['杜門（守護者）', '守り極める職人気質'],
-  ['傷門（挑戦者）', '壊して勝ち取る勝負師'],
-  ['驚門（変革者）', '揺さぶり変えるトリックスター'],
-  ['死門（再生者）', '終わらせ生まれ変わる不死鳥'],
-];
+const THEMES = ['恋愛', '復縁', '金運', '相性', '人間関係', '開運方位'];
 
 export default async function Home() {
   const arts = await getArticles();
-  const latest = arts.slice(0, 3);
+  const ranking = arts.slice(0, 5);
   return (
     <div className="wrap">
+      {/* HERO */}
       <div className="hero">
         <div className="sub">奇 門 遁 甲 ・ 2 0 2 6</div>
         <div className="big">運命の八門</div>
@@ -35,8 +31,15 @@ export default async function Home() {
         <p className="small" style={{ marginTop: 8 }}>所要1分・無料 ／ 結果はシェア画像つき</p>
       </div>
 
+      {/* 今日の方角ティーザー（DAU） */}
+      <TodayTeaser />
+
+      {/* 電話占い（収益） */}
+      <PromoCoconala />
+
+      {/* できること */}
       <div className="card">
-        <h3 style={{ textAlign: 'center', color: 'var(--gold)', letterSpacing: '.1em', margin: '.2em 0 1em' }}>できること</h3>
+        <h3 className="sect-h">できること</h3>
         <div className="menu-grid">
           {MENU.map(([h, ic, t, d]) => (
             <Link key={h} className="menu-card" href={h}>
@@ -46,26 +49,53 @@ export default async function Home() {
         </div>
       </div>
 
+      {/* 季節・特集バナー */}
+      <Link className="feature-banner" href="/blog/kaiun-houi-2026" style={{ marginBottom: 18 }}>
+        <small>✦ 特 集 ✦</small>
+        <b>2026年 あなたの開運方位ガイド</b>
+        <span className="go">特集を読む →</span>
+      </Link>
+
+      {/* 人気コラム ランキング */}
       <div className="card">
-        <h3 style={{ textAlign: 'center', color: 'var(--gold)', letterSpacing: '.08em', margin: '.2em 0 1em' }}>最新の開運コラム</h3>
-        {latest.length === 0 && <p className="small">コラムを準備中です。</p>}
-        {latest.map((a) => (
-          <Link key={a.id} className="card" style={{ display: 'block', color: 'var(--txt)', marginBottom: 12 }} href={`/blog/${a.slug}`}>
-            <img src={thumbFor(a)} loading="lazy" alt="" style={{ width: '100%', borderRadius: 10, marginBottom: 8, border: '1px solid var(--line)' }} />
-            <div className="qn">{a.cat}・{a.date}</div>
-            <div style={{ fontWeight: 700, color: 'var(--gold)', fontSize: '1rem', lineHeight: 1.5 }}>{a.title}</div>
-          </Link>
-        ))}
-        <Link className="btn ghost sm" href="/blog">コラムをもっと見る</Link>
+        <h3 className="sect-h">人気の開運コラム</h3>
+        {ranking.length === 0 && <p className="small">コラムを準備中です。</p>}
+        <ol className="rank-list">
+          {ranking.map((a, i) => (
+            <li key={a.id} className="rank-item">
+              <div className="rank-num">{i + 1}</div>
+              <img className="rank-thumb" src={thumbFor(a)} loading="lazy" alt="" />
+              <Link href={`/blog/${a.slug}`} style={{ flex: 1 }}>
+                <div className="rt">{a.title}</div>
+                <div className="rc">{a.cat}・{a.date}</div>
+              </Link>
+            </li>
+          ))}
+        </ol>
+        <div className="theme-chips" style={{ margin: '14px 0 4px' }}>
+          {THEMES.map(t => <Link key={t} className="theme-chip" href="/blog">#{t}</Link>)}
+        </div>
+        <Link className="btn ghost sm" href="/blog" style={{ marginTop: 10 }}>コラムをもっと見る</Link>
       </div>
 
+      {/* 開運グッズ（物販アフィリ） */}
+      <KaiunGoods />
+
+      {/* 八門とは + 8タイプちら見せ */}
       <div className="card">
-        <h3 style={{ textAlign: 'center', letterSpacing: '.08em', color: 'var(--gold)' }}>八門とは ― 運命を司る8つの門</h3>
+        <h3 className="sect-h">八門とは ― 運命を司る8つの門</h3>
         <p className="small">奇門遁甲（きもんとんこう）は、古代中国の軍師・諸葛孔明も用いたと伝わる<b>「帝王学」</b>。<b>時間（いつ）と空間（どの方位）</b>を読み解き、運を“動かす”ための実践的な占術です。その中核が<b>八門</b>——人は誰しも、生まれながらに一つの門の気を宿していると考えます。</p>
-        <p className="small">あなたがどの門の魂を持つかで、<b>強み・恋愛のクセ・金運の流れ・吉となる方位</b>が変わります。</p>
-        <ul className="small" style={{ lineHeight: 2 }}>
-          {GATES.map(([n, d]) => <li key={n}><b>{n}</b>…{d}</li>)}
-        </ul>
+        <p className="small" style={{ textAlign: 'center', color: 'var(--gold)', fontWeight: 700, margin: '14px 0 4px' }}>あなたはどの門？</p>
+        <div className="type-grid">
+          {ORDER.map(k => {
+            const g = GATES[k];
+            return (
+              <Link key={k} className="type-mini" href={`/zukan#gate-${k}`}>
+                <b>{g.name}</b>（{g.arche}）<span>{g.catch}</span>
+              </Link>
+            );
+          })}
+        </div>
         <p className="small">「凶」とされる門も、本サイトでは“なりたい正体”として前向きに読み解きます。あなたの門と2026年の<Link href="/today">開運方位</Link>を、まずは無料の診断で確かめてみましょう。</p>
         <Link className="btn ghost sm" href="/shindan" style={{ marginTop: 10 }}>▶ 自分の門を診断する</Link>
       </div>
