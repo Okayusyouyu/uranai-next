@@ -7,6 +7,8 @@ const LINKS = {
   coconala: 'https://px.a8.net/svt/ejp?a8mat=4B5MC4+7PG0OI+2PEO+C3BAQ',
   // もしも：お守りジュエリー Amora Amulet
   amulet: 'https://af.moshimo.com/af/c/click?a_id=5611272&p_id=5551&pc_id=15233&pl_id=71663',
+  // A8：電話占いデスティニー（無料登録で最大2,450円分）
+  destiny: 'https://px.a8.net/svt/ejp?a8mat=4B5MC7+5JG8FM+1SZG+5ZMCI',
 };
 
 export async function GET(req, { params }) {
