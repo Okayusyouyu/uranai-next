@@ -1,3 +1,5 @@
+import CoconalaBanner from './CoconalaBanner';
+
 /* 電話占いココナラ（A8）の収益プロモカード。トップ・/hikaku で共用。
    single source of truth：リンク変更はここだけ直せば全箇所反映。 */
 export const COCONALA = {
@@ -17,7 +19,7 @@ export default function PromoCoconala({ heading = '📞 はじめての電話占
       <h3 style={{ color: 'var(--gold)', margin: '10px 0 0' }}>{COCONALA.name}</h3>
       <div className="offer">🎁 {COCONALA.tokuten}</div>
       <a href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener" style={{ display: 'block', textDecoration: 'none' }}>
-        <img className="bnr" src={COCONALA.bannerImg} width={COCONALA.bannerW} height={COCONALA.bannerH} alt={COCONALA.name} />
+        <CoconalaBanner src={COCONALA.bannerImg} w={COCONALA.bannerW} h={COCONALA.bannerH} alt={COCONALA.name} />
       </a>
       <p className="small">{COCONALA.desc}</p>
       <a className="gobtn" href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener" style={{ fontSize: '.95rem', padding: '11px 18px' }}>▶ 3,000円分の無料クーポンを受け取る</a>
