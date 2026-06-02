@@ -21,6 +21,17 @@ const NAYAMI = [
 
 const anyPending = SERVICES.some(s => !s.url);
 
+/* チャット/電話で気軽に相談できる選択肢（分課金の電話占いとは別枠）。
+   ココナラ＝A8提携済み。banner にバナー素材のHTML（350×160等）をもらったら img を差し込む。 */
+const COCONALA = {
+  name: 'ココナラ（お悩み相談・占い）',
+  link: 'https://px.a8.net/svt/ejp?a8mat=4B5MC4+7Q1GAA+2PEO+1BPGPE',
+  imp: 'https://www17.a8.net/0.gif?a8mat=4B5MC4+7Q1GAA+2PEO+1BPGPE',
+  bannerImg: '', // 例: 'https://www25.a8.net/svt/bgt?aid=...&wid=...&eno=...&mid=...&mc=...'
+  bannerW: 350, bannerH: 160,
+  desc: 'プロの占い師・カウンセラーに、チャット・電話・ビデオで相談できるスキルマーケット。1回ごとの明朗会計で、分課金の電話占いより気軽に試せます。恋愛・人間関係・仕事の悩みをまず軽く相談したい方に。',
+};
+
 export const metadata = {
   title: '電話占い 比較ランキング ― 料金・初回特典・占術で選ぶ',
   description: '当たると評判の電話占いを、料金（1分あたり）・初回無料特典・占術・営業時間・安全性で比較。恋愛・復縁・金運など悩み別の選び方も。',
@@ -69,6 +80,22 @@ export default function Page() {
           </table>
         </div>
         <p className="small">※料金は1分あたりの目安。最新情報は各公式サイトをご確認ください。</p>
+      </div>
+
+      {/* 気軽な相談枠（チャット/電話・分課金ではない） */}
+      <div className="card">
+        <h3 style={{ color: 'var(--gold)' }}>💬 チャット・電話で気軽に相談</h3>
+        <p className="small">「いきなり電話はハードルが高い…」という方には、1回ごとに料金が決まっているスキルマーケットがおすすめです。</p>
+        <a href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener" style={{ display: 'block', textDecoration: 'none' }}>
+          {COCONALA.bannerImg
+            ? <img src={COCONALA.bannerImg} width={COCONALA.bannerW} height={COCONALA.bannerH} alt={COCONALA.name} style={{ display: 'block', maxWidth: '100%', height: 'auto', margin: '10px auto', borderRadius: 12, border: '1px solid var(--line)' }} />
+            : null}
+          <div style={{ fontWeight: 700, color: 'var(--gold)', marginTop: 8 }}>{COCONALA.name}</div>
+        </a>
+        <p className="small">{COCONALA.desc}</p>
+        <a className="gobtn" href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener">▶ ココナラで相談する</a>
+        {/* A8インプレッション計測タグ */}
+        <img src={COCONALA.imp} width={1} height={1} alt="" style={{ position: 'absolute', width: 1, height: 1, opacity: 0 }} />
       </div>
 
       <div className="card">
