@@ -21,15 +21,16 @@ const NAYAMI = [
 
 const anyPending = SERVICES.some(s => !s.url);
 
-/* チャット/電話で気軽に相談できる選択肢（分課金の電話占いとは別枠）。
-   ココナラ＝A8提携済み。banner にバナー素材のHTML（350×160等）をもらったら img を差し込む。 */
+/* ココナラ電話占い＝A8提携済み。新規登録で3,000円分無料クーポンの強オファー。
+   従来型の分課金電話占い（ヴェルニ等）とは料金体系が違うため、表ではなく専用カードで訴求。 */
 const COCONALA = {
-  name: 'ココナラ（お悩み相談・占い）',
-  link: 'https://px.a8.net/svt/ejp?a8mat=4B5MC4+7Q1GAA+2PEO+1BPGPE',
-  imp: 'https://www17.a8.net/0.gif?a8mat=4B5MC4+7Q1GAA+2PEO+1BPGPE',
+  name: '電話占い【ココナラ】',
+  tokuten: '新規登録で3,000円分無料クーポン',
+  link: 'https://px.a8.net/svt/ejp?a8mat=4B5MC4+7PG0OI+2PEO+C3BAQ',
+  imp: 'https://www14.a8.net/0.gif?a8mat=4B5MC4+7PG0OI+2PEO+C3BAQ',
   bannerImg: 'https://pub.a8.net/data/s00000012624/banner/202108031451560480.jpg',
   bannerW: 300, bannerH: 250,
-  desc: 'プロの占い師・カウンセラーに、チャット・電話・ビデオで相談できるスキルマーケット。1回ごとの明朗会計で、分課金の電話占いより気軽に試せます。恋愛・人間関係・仕事の悩みをまず軽く相談したい方に。',
+  desc: '東証グロース上場・株式会社ココナラが運営。実績豊富な占い師を自分で選び、電話・チャットで相談できます。料金は占い師ごとの明朗会計で、従来の電話占いより気軽。まず無料クーポン分から試せるのが安心です。',
 };
 
 export const metadata = {
@@ -82,18 +83,19 @@ export default function Page() {
         <p className="small">※料金は1分あたりの目安。最新情報は各公式サイトをご確認ください。</p>
       </div>
 
-      {/* 気軽な相談枠（チャット/電話・分課金ではない） */}
-      <div className="card">
-        <h3 style={{ color: 'var(--gold)' }}>💬 チャット・電話で気軽に相談</h3>
-        <p className="small">「いきなり電話はハードルが高い…」という方には、1回ごとに料金が決まっているスキルマーケットがおすすめです。</p>
+      {/* イチオシ枠：ココナラ電話占い（3,000円無料クーポン） */}
+      <div className="card" style={{ border: '2px solid var(--gold)' }}>
+        <div style={{ display: 'inline-block', background: '#c0392b', color: '#fff', fontSize: '.78rem', fontWeight: 700, borderRadius: 999, padding: '4px 14px' }}>初めての方におすすめ</div>
+        <h3 style={{ color: 'var(--gold)', marginTop: 10 }}>📞 {COCONALA.name}</h3>
+        <div style={{ fontSize: '1.15rem', fontWeight: 700, color: '#c0392b', margin: '2px 0 6px' }}>🎁 {COCONALA.tokuten}</div>
         <a href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener" style={{ display: 'block', textDecoration: 'none' }}>
           {COCONALA.bannerImg
             ? <img src={COCONALA.bannerImg} width={COCONALA.bannerW} height={COCONALA.bannerH} alt={COCONALA.name} style={{ display: 'block', maxWidth: '100%', height: 'auto', margin: '10px auto', borderRadius: 12, border: '1px solid var(--line)' }} />
             : null}
-          <div style={{ fontWeight: 700, color: 'var(--gold)', marginTop: 8 }}>{COCONALA.name}</div>
         </a>
         <p className="small">{COCONALA.desc}</p>
-        <a className="gobtn" href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener">▶ ココナラで相談する</a>
+        <a className="gobtn" href={COCONALA.link} target="_blank" rel="nofollow sponsored noopener" style={{ fontSize: '.95rem', padding: '10px 18px' }}>▶ 3,000円分の無料クーポンを受け取る</a>
+        <p className="small" style={{ color: '#9b8f6a', marginTop: 6 }}>※クーポンは新規会員登録の方が対象。詳細・条件は公式ページをご確認ください。</p>
         {/* A8インプレッション計測タグ */}
         <img src={COCONALA.imp} width={1} height={1} alt="" style={{ position: 'absolute', width: 1, height: 1, opacity: 0 }} />
       </div>
