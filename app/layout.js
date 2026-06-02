@@ -1,5 +1,9 @@
 import './globals.css';
 import Link from 'next/link';
+import { GoogleAnalytics } from '@next/third-parties/google';
+
+// GA4計測ID。GA4プロパティ作成後、env(NEXT_PUBLIC_GA_ID)か下のフォールバックに 'G-XXXXXXXXXX' を入れれば有効化。
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || '';
 
 // OGP絶対URLの基点。明示env優先 → Vercel自動提供のプロダクションURL → ローカル。
 // VERCEL_PROJECT_PRODUCTION_URL はVercelが自動でセット（手動env不要・独自ドメインにも追従）。
@@ -30,6 +34,7 @@ export default function RootLayout({ children }) {
         </div></div>
         {children}
       </body>
+      {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
     </html>
   );
 }
