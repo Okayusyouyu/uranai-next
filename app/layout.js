@@ -17,6 +17,7 @@ export const metadata = {
   title: { default: '運命の八門 ― 奇門遁甲のあなた診断', template: '%s ― 運命の八門' },
   description: '奇門遁甲の八門で、あなたの正体・2026年の運勢・開運方位を無料診断。恋愛・金運・相性の開運コラムも毎日更新。',
   openGraph: { siteName: '運命の八門', locale: 'ja_JP', type: 'website' },
+  verification: { google: 'jm25lc8b-84eIWT5GWEaO3XZFYg5Su1lqiBc0BEaxsk' },
 };
 
 const NAV = [
