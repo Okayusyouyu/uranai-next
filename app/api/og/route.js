@@ -2,13 +2,17 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
 
-// 必要な文字だけサブセット取得（CJKフォントを軽量に）。MSIE UAでTTFを返させる。
+// 必要な文字だけサブセット取得（CJKフォントを軽量に）。
+// 重要: UAを偽装しない。undici既定UAだとGoogleが format('truetype')=TTF を返す
+// （MSIE偽装だとEOTになり satori がパースできず500になる）。
 async function loadFont(text) {
   const url = `https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&text=${encodeURIComponent(text)}`;
-  const css = await (await fetch(url, { headers: { 'User-Agent': 'Mozilla/4.0 (compatible; MSIE 6.0)' } })).text();
-  const m = css.match(/src:\s*url\(([^)]+)\)\s*format\('(?:truetype|opentype)'\)/) || css.match(/url\(([^)]+)\)/);
+  const css = await (await fetch(url)).text();
+  const m = css.match(/src:\s*url\(([^)]+)\)\s*format\('(?:truetype|opentype)'\)/);
   if (!m) throw new Error('font url not found');
-  return await (await fetch(m[1])).arrayBuffer();
+  const res = await fetch(m[1]);
+  if (res.status !== 200) throw new Error('font fetch failed: ' + res.status);
+  return await res.arrayBuffer();
 }
 
 export async function GET(req) {
