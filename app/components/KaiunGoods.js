@@ -7,6 +7,11 @@ const BANNERS = [
     alt: '大天使の波動を込めたお守りジュエリー Amora Amulet',
     cap: '大天使の波動を込めた お守りジュエリー「Amora Amulet」',
   },
+  {
+    img: '/img/g2.png', href: '/go/kuro', w: 300, h: 300,
+    alt: '黒瑞堂 黒い天然石アクセサリー専門店',
+    cap: '黒瑞堂｜黒い天然石・パワーストーンの専門店',
+  },
 ];
 const PRODUCTS = [
   // 例: { name: '天然水晶 ブレスレット', img: '/img/xxx.jpg', price: '¥2,480', url: '/go/xxx', shop: '楽天' },
