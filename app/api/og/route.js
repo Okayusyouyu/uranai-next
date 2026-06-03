@@ -62,6 +62,8 @@ export async function GET(req) {
     {
       width: 1200, height: 630,
       fonts: fontData ? [{ name: 'JP', data: fontData, weight: 700, style: 'normal' }] : [],
+      // 同じtitle+catは決定的→長期キャッシュ。SNSクローラ/Threads画像取得を高速・安定化。
+      headers: { 'Cache-Control': 'public, max-age=31536000, s-maxage=31536000, immutable' },
     }
   );
 }
