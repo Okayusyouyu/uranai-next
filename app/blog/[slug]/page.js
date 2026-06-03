@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { getArticle, getArticles, thumbFor } from '../../../lib/supabase';
 import PromoCoconala from '../../components/PromoCoconala';
 import KaiunGoods from '../../components/KaiunGoods';
@@ -52,7 +53,7 @@ function extractFaq(body) {
 export default async function ArticlePage({ params }) {
   const { slug } = await params;
   const a = await getArticle(slug);
-  if (!a) return <div className="wrap"><p className="small">記事が見つかりませんでした。</p></div>;
+  if (!a) notFound(); // 削除済み/存在しないslugは本物の404に（ソフト404を防ぐ）
 
   const arts = await getArticles();
   // 関連＝同カテゴリ優先で3本（足りなければ他カテゴリで補完）

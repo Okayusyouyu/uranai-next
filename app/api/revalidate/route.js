@@ -12,6 +12,7 @@ function run(secret, slug) {
   revalidateTag('articles');
   revalidatePath('/');
   revalidatePath('/blog');
+  revalidatePath('/blog/[slug]', 'page'); // 動的セグメント全体を確実にパージ（削除記事の404化に必要）
   if (slug) revalidatePath(`/blog/${slug}`);
   return Response.json({ revalidated: true, slug: slug || null });
 }
