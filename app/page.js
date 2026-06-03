@@ -6,7 +6,7 @@ import TodayTeaser from './components/TodayTeaser';
 import KaiunGoods from './components/KaiunGoods';
 import ColumnRanking from './components/ColumnRanking';
 
-export const revalidate = 3600;
+export const revalidate = 600;
 
 const SITE =
   process.env.NEXT_PUBLIC_SITE_URL ||

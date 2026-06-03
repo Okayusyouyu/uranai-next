@@ -3,7 +3,7 @@ import { getArticle, getArticles, thumbFor } from '../../../lib/supabase';
 import PromoCoconala from '../../components/PromoCoconala';
 import KaiunGoods from '../../components/KaiunGoods';
 
-export const revalidate = 3600; // ISR：n8nの新記事を1時間で反映
+export const revalidate = 600; // ISR：保険。公開時は /api/revalidate で即時反映
 
 const SITE =
   process.env.NEXT_PUBLIC_SITE_URL ||

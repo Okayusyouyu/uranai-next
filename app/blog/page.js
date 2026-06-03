@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getArticles, thumbFor } from '../../lib/supabase';
 import PromoCoconala from '../components/PromoCoconala';
 
-export const revalidate = 3600;
+export const revalidate = 600;
 export const metadata = {
   title: '開運コラム ― 奇門遁甲・開運方位・金運・恋愛・相性',
   description: '奇門遁甲・八門・開運方位・金運・恋愛・復縁・相性など、運を動かすための開運コラム。毎日更新。',
