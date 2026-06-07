@@ -6,6 +6,7 @@ import PromoCoconala from '../components/PromoCoconala';
 const SERVICES = [
   { rank: 1, name: '電話占いデスティニー', form: '電話・チャット', tokuten: '無料登録で最大2,450円分のお試し鑑定', feat: '厳選占い師が多数在籍／よく当たると評判', go: '/go/destiny' },
   { rank: 2, name: '電話占い【ココナラ】', form: '電話・チャット', tokuten: '新規登録で3,000円分無料クーポン', feat: '東証グロース上場・株式会社ココナラ運営', go: '/go/coconala' },
+  { rank: 3, name: '電話占いComet', form: '電話', tokuten: '初指名のお相手と5分無料／登録・指名料0円', feat: '全国から厳選の人気占い師が多数在籍／電話番号は相手に非通知で安心', go: '/go/comet' },
 ];
 
 const NAYAMI = [

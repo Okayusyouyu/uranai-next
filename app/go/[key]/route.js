@@ -9,6 +9,8 @@ const LINKS = {
   amulet: 'https://af.moshimo.com/af/c/click?a_id=5611272&p_id=5551&pc_id=15233&pl_id=71663',
   // A8：電話占いデスティニー（無料登録で最大2,450円分）
   destiny: 'https://px.a8.net/svt/ejp?a8mat=4B5MC7+5JG8FM+1SZG+5ZMCI',
+  // A8：電話占いComet（初指名5分無料・登録/指名料0円）
+  comet: 'https://px.a8.net/svt/ejp?a8mat=4B5MC4+7XS35E+48YY+5YJRM',
   // もしも：黒瑞堂（黒い天然石アクセサリー）
   kuro: 'https://af.moshimo.com/af/c/click?a_id=5611271&p_id=6200&pc_id=17438&pl_id=80248',
 };
