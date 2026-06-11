@@ -130,3 +130,9 @@ table.cmp tbody tr:nth-child(even){background:#fcfaf4}
 .type-mini:hover{border-color:var(--gold);background:#fff8e9}
 .type-mini b{color:var(--gold);font-size:.98rem}
 .type-mini span{display:block;font-size:.74rem;color:var(--muted);margin-top:2px}
+/* 公式SNS（トップ・今日の方角の下） */
+.sns-wrap{text-align:center;margin:2px 0 18px}
+.sns-label{font-size:.82rem;color:var(--muted);letter-spacing:.06em;margin:0 0 10px}
+.sns-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.sns-ic{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--txt);box-shadow:0 4px 12px rgba(120,100,40,.08);transition:.18s}
+.sns-ic:hover{color:var(--bc);border-color:var(--bc);transform:translateY(-2px);box-shadow:0 8px 18px rgba(120,100,40,.16)}

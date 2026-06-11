@@ -3,6 +3,7 @@ import { getArticles } from '../lib/supabase';
 import { GATES, ORDER } from '../lib/hachimon';
 import PromoCoconala from './components/PromoCoconala';
 import TodayTeaser from './components/TodayTeaser';
+import SnsLinks from './components/SnsLinks';
 import KaiunGoods from './components/KaiunGoods';
 import ColumnRanking from './components/ColumnRanking';
 
@@ -63,6 +64,9 @@ export default async function Home() {
 
       {/* 今日の方角ティーザー（DAU） */}
       <TodayTeaser />
+
+      {/* 公式SNS */}
+      <SnsLinks />
 
       {/* 電話占い（収益） */}
       <PromoCoconala />
